@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Harpreet! 🎉</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&display=swap');
+        
+        body { font-family: 'Playfair Display', serif; }
+        .title-font { font-family: 'Dancing Script', cursive; }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .balloon {
+            position: absolute;
+            font-size: 4rem;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.9;
+            z-index: 10;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px gold;
+            animation: sparkle-anim 1.5s infinite;
+        }
+
+        @keyframes sparkle-anim {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .cake { animation: cake-bob 2s ease-in-out infinite; }
+
+        @keyframes cake-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .message-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .message-card:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+    </style>
+</head>
+<body class="bg-pink-50 text-gray-800 overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-pink-200">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-heart text-pink-500 text-2xl"></i>
+                <span class="text-2xl font-bold text-pink-600">Harpreet's Day</span>
+            </div>
+            <div class="flex items-center gap-6 text-sm">
+                <a href="#home" class="hover:text-pink-500 transition-colors">Home</a>
+                <a href="#wishes" class="hover:text-pink-500 transition-colors">Wishes</a>
+                <button onclick="launchBigConfetti()" 
+                        class="px-6 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-full font-medium flex items-center gap-2 transition-all active:scale-95">
+                    <i class="fa-solid fa-party-horn"></i>
+                    <span>Confetti Explosion!</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div id="balloons" class="absolute inset-0 pointer-events-none"></div>
+        <div id="sparkles" class="absolute inset-0 pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 pt-20">
+            <div class="inline-flex items-center gap-2 bg-white/90 backdrop-blur px-6 py-2 rounded-full mb-8 border border-pink-200">
+                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium tracking-widest text-pink-600">IT'S HER SPECIAL DAY</span>
+            </div>
+            
+            <h1 class="title-font text-8xl md:text-[9rem] leading-none text-white drop-shadow-2xl mb-6 tracking-tighter">
+                Happy Birthday
+            </h1>
+            <h2 class="title-font text-7xl md:text-8xl text-white drop-shadow-xl mb-8" style="text-shadow: 0 10px 30px rgba(0,0,0,0.3)">
+                Harpreet!
+            </h2>
+            
+            <div class="flex justify-center mb-12">
+                <div onclick="launchBigConfetti()" 
+                     class="cake cursor-pointer bg-white rounded-3xl shadow-2xl p-8 border-8 border-yellow-300 hover:border-yellow-400 transition-all">
+                    <div class="text-8xl">🎂</div>
+                    <div class="mt-4 text-pink-600 font-medium">Make a Wish</div>
+                </div>
+            </div>
+
+            <p class="max-w-md mx-auto text-xl md:text-2xl text-white/90 font-light leading-relaxed mb-12">
+                May your day be filled with endless joy, laughter, and beautiful moments. 
+                You light up the world, Harpreet!
+            </p>
+
+            <div class="flex justify-center">
+                <button onclick="launchConfetti(); document.getElementById('wishes').scrollIntoView({ behavior: 'smooth' })" 
+                        class="group px-10 py-5 bg-white text-pink-600 rounded-2xl font-semibold text-lg flex items-center justify-center gap-3 hover:shadow-2xl transition-all hover:-translate-y-1">
+                    <span>Read Sweet Wishes</span>
+                    <i class="fa-solid fa-arrow-down group-active:rotate-12 transition"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex gap-8 text-4xl opacity-70">
+            <div class="animate-bounce" style="animation-delay: 0s">❤️</div>
+            <div class="animate-bounce" style="animation-delay: 0.8s">💖</div>
+            <div class="animate-bounce" style="animation-delay: 1.6s">🌸</div>
+        </div>
+    </section>
+
+    <!-- Wishes Section -->
+    <section id="wishes" class="py-24 bg-white">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-block px-6 py-3 bg-pink-100 text-pink-600 rounded-3xl text-sm font-medium mb-4">FOR YOU, HARPREET</div>
+                <h2 class="text-6xl font-bold title-font text-gray-800">Birthday Wishes</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="message-card bg-gradient-to-br from-pink-50 to-rose-50 p-8 rounded-3xl shadow-xl border border-pink-100">
+                    <div class="text-5xl mb-6">✨</div>
+                    <p class="text-lg leading-relaxed italic text-gray-700">
+                        "May every candle on your cake represent a beautiful memory and every wish bring you closer to your dreams. 
+                        You deserve the world, Harpreet!"
+                    </p>
+                    <div class="mt-8 flex items-center gap-3">
+                        <div class="w-10 h-px bg-pink-300 flex-1"></div>
+                        <span class="text-pink-500 font-medium">— With love</span>
+                    </div>
+                </div>
+
+                <div class="message-card bg-gradient-to-br from-amber-50 to-yellow-50 p-8 rounded-3xl shadow-xl border border-amber-100 relative">
+                    <div class="absolute -top-4 -right-4 text-6xl">🎈</div>
+                    <div class="text-5xl mb-6">🌟</div>
+                    <p class="text-lg leading-relaxed italic text-gray-700">
+                        "Happy Birthday to the most radiant soul I know. Your smile is contagious, your heart is pure gold, 
+                        and your presence makes everything better. Celebrate big today!"
+                    </p>
+                    <div class="mt-8 flex items-center gap-3">
+                        <div class="w-10 h-px bg-amber-300 flex-1"></div>
+                        <span class="text-amber-500 font-medium">— Always cheering for you</span>
+                    </div>
+                </div>
+
+                <div class="message-card bg-gradient-to-br from-purple-50 to-fuchsia-50 p-8 rounded-3xl shadow-xl border border-purple-100">
+                    <div class="text-5xl mb-6">🦋</div>
+                    <p class="text-lg leading-relaxed italic text-gray-700">
+                        "Another year wiser, more beautiful, and even more loved. 
+                        May this year bring you adventures, success, and all the happiness your heart can hold."
+                    </p>
+                    <div class="mt-8 flex items-center gap-3">
+                        <div class="w-10 h-px bg-purple-300 flex-1"></div>
+                        <span class="text-purple-500 font-medium">— From your admirers</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <p class="text-2xl text-pink-600 font-light italic">"Today is all about YOU, Harpreet. Soak it in!"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-32 bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 text-white relative overflow-hidden">
+        <div class="max-w-2xl mx-auto px-6 text-center relative z-10">
+            <div class="text-7xl mb-8 animate-pulse">🎉🥳🎂</div>
+            <h2 class="text-6xl title-font leading-tight mb-6">Make this day unforgettable, Harpreet</h2>
+            <p class="text-xl opacity-90 mb-12">
+                Thank you for being such an incredible person. 
+                The world is brighter because you're in it.
+            </p>
+            <button onclick="launchBigConfetti()" 
+                    class="px-12 py-6 bg-white text-pink-600 text-2xl rounded-3xl font-bold hover:scale-110 active:scale-95 transition-all shadow-2xl flex items-center gap-4 mx-auto">
+                <span>Blow out the candles!</span>
+                <span class="text-4xl">🕯️</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white/70 py-12 text-center">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex justify-center gap-8 text-3xl mb-8">
+                <i onclick="launchConfetti()" class="fa-solid fa-heart cursor-pointer hover:text-pink-400 transition"></i>
+                <i onclick="launchConfetti()" class="fa-solid fa-gift cursor-pointer hover:text-pink-400 transition"></i>
+                <i onclick="launchConfetti()" class="fa-solid fa-star cursor-pointer hover:text-pink-400 transition"></i>
+            </div>
+            <p class="text-sm">Made with ❤️ for Harpreet • July 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        function createBalloons() {
+            const container = document.getElementById('balloons');
+            const emojis = ['🎈', '🪩', '🌸', '💕', '🦋', '🍭'];
+            for (let i = 0; i < 18; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.animationDuration = (Math.random() * 6 + 7) + 's';
+                balloon.style.animationDelay = '-' + Math.random() * 15 + 's';
+                balloon.style.fontSize = (Math.random() * 3 + 3) + 'rem';
+                container.appendChild(balloon);
+            }
+        }
+
+        function createSparkles() {
+            const container = document.getElementById('sparkles');
+            for (let i = 0; i < 60; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = '-' + Math.random() * 3 + 's';
+                container.appendChild(sparkle);
+            }
+        }
+
+        function launchConfetti() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }
+
+        function launchBigConfetti() {
+            const count = 300;
+            const defaults = { origin: { y: 0.7 } };
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) }));
+            }
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
+
+        window.onload = function() {
+            createBalloons();
+            createSparkles();
+            setTimeout(() => launchConfetti(), 800);
+            setTimeout(() => launchConfetti(), 1800);
+            setInterval(() => { if (Math.random() > 0.4) launchConfetti(); }, 8000);
+        };
+    </script>
+</body>
+</html>
